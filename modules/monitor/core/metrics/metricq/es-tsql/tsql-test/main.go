@@ -30,7 +30,7 @@ import (
 
 func getClient() *elastic.Client {
 	options := []elastic.ClientOptionFunc{
-		elastic.SetURL(strings.Split("http://addon-elasticsearch.default.svc.cluster.local:9200", ",")...),
+		elastic.SetURL(strings.Split("http://localhost:9200", ",")...),
 		elastic.SetSniff(false),
 	}
 	client, err := elastic.NewClient(options...)
@@ -128,10 +128,16 @@ func getSources(query tsql.Query) []string {
 }
 
 func main() {
-	err := test20()
+	err := test21()
 	if err != nil {
 		panic(err)
 	}
+}
+
+func test21() error{
+	return Query(`
+     SELECT * FROM test 
+	`,map[string]interface{}{})
 }
 
 func test20() error {
